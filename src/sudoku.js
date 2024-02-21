@@ -18,7 +18,6 @@ class sudoku {
 		this.fullSize = this.size ** 2;
 		this.board = [];
 		this.#newBoardByShuffle();
-		console.log(this.board);
 	}
 	#newBoardByShuffle() {
 		//Some sample boards for testing
