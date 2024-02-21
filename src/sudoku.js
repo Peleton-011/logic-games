@@ -32,8 +32,12 @@ class sudoku {
 					.fill(0)
 					.map((val, subindex) => index * 9 + subindex)
 			);
+		const rowedBoard = new Array(9).fill(0).map((val, index) => {
+			return new Array(9).fill(0).map((val) => index);
+		});
 		//console.log(orderedBoard);
-		this.board = this.unitBoard.map((elem) => {
+		console.log(rowedBoard);
+		this.board = rowedBoard.map((elem) => {
 			console.log("row: ");
 			console.log(elem);
 			return elem.map((cell) => {
@@ -45,9 +49,9 @@ class sudoku {
 		console.log("After deepCopy :");
 		console.log(this.board);
 		//swap numbers
-		this.#shuffleNumbers();
+		//this.#shuffleNumbers();
 		//shuffle rows and columns, then subgrid rows and columns
-		//this.#shuffleRows();
+		this.#shuffleRows();
 		//this.#shuffleColumns();
 	}
 
@@ -60,16 +64,11 @@ class sudoku {
 
 	#swapNumbers(a, b) {
 		this.board = this.board.map((row) => {
-			console.log("row");
-			console.log(row);
-			console.log("switching " + a + " and " + b);
-			const res = row.map((cell) => {
+			return row.map((cell) => {
 				if (cell === a) return b;
 				if (cell === b) return a;
 				return cell;
 			});
-			console.log(res);
-			return res;
 		});
 	}
 
@@ -77,8 +76,8 @@ class sudoku {
 		let blockNumber;
 
 		for (let i = 0; i < this.fullSize; i++) {
-			const ranNum = this.#getRandomInt(this.size) + 1;
-			blockNumber = i / this.size;
+			const ranNum = this.#getRandomInt(this.size);
+			blockNumber = Math.floor(i / this.size);
 			this.#swapRows(i, blockNumber * this.size + ranNum);
 		}
 	}
