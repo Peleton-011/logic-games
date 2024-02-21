@@ -23,7 +23,7 @@ class sudoku {
 	#newBoardByShuffle() {
 		//Deep copy the unitBoard
 		console.log("Before deepCopy :");
-		console.log(this.board);
+		console.log(this.unitBoard);
 		//Make an ordered board
 		const orderedBoard = new Array(9)
 			.fill(0)
@@ -45,7 +45,7 @@ class sudoku {
 		console.log("After deepCopy :");
 		console.log(this.board);
 		//swap numbers
-		//this.#shuffleNumbers();
+		this.#shuffleNumbers();
 		//shuffle rows and columns, then subgrid rows and columns
 		//this.#shuffleRows();
 		//this.#shuffleColumns();
@@ -53,21 +53,24 @@ class sudoku {
 
 	#shuffleNumbers() {
 		for (let i = 0; i < this.fullSize; i++) {
-			const ranNum = this.#getRandomInt(this.fullSize) + 1;
-			this.#swapNumbers(i, ranNum);
+			const ranNum = this.#getRandomInt(this.fullSize - 1) + 1;
+			this.#swapNumbers(i + 1, ranNum);
 		}
 	}
 
 	#swapNumbers(a, b) {
-		for (let y = 0; y < this.fullSize; y++) {
-			for (let x = 0; x < this.fullSize; x++) {
-				if (this.board[x][y] == a) {
-					this.board[x][y] = b;
-				} else if (this.board[x][y] == b) {
-					this.board[x][y] = a;
-				}
-			}
-		}
+		this.board = this.board.map((row) => {
+			console.log("row");
+			console.log(row);
+			console.log("switching " + a + " and " + b);
+			const res = row.map((cell) => {
+				if (cell === a) return b;
+				if (cell === b) return a;
+				return cell;
+			});
+			console.log(res);
+			return res;
+		});
 	}
 
 	#shuffleRows() {
