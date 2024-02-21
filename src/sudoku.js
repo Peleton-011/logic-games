@@ -32,12 +32,17 @@ class sudoku {
 					.fill(0)
 					.map((val, subindex) => index * 9 + subindex)
 			);
-		const rowedBoard = new Array(9).fill(0).map((val, index) => {
-			return new Array(9).fill(0).map((val) => index);
-		});
+		const rowedBoard = new Array(9)
+			.fill(0)
+			.map((val, index) => new Array(9).fill(0).map((val) => index));
+		const columnedBoard = new Array(9)
+			.fill(0)
+			.map((val, index) =>
+				new Array(9).fill(0).map((val, subindex) => subindex)
+			);
 		//console.log(orderedBoard);
-		console.log(rowedBoard);
-		this.board = rowedBoard.map((elem) => {
+		console.log(columnedBoard);
+		this.board = columnedBoard.map((elem) => {
 			console.log("row: ");
 			console.log(elem);
 			return elem.map((cell) => {
@@ -51,8 +56,8 @@ class sudoku {
 		//swap numbers
 		//this.#shuffleNumbers();
 		//shuffle rows and columns, then subgrid rows and columns
-		this.#shuffleRows();
-		//this.#shuffleColumns();
+		// this.#shuffleRows();
+		this.#shuffleColumns();
 	}
 
 	#shuffleNumbers() {
@@ -92,8 +97,8 @@ class sudoku {
 		let blockNumber;
 
 		for (let i = 0; i < this.fullSize; i++) {
-			const ranNum = this.#getRandomInt(this.size) + 1;
-			blockNumber = i / this.size;
+			const ranNum = this.#getRandomInt(this.size);
+			blockNumber = Math.floor(i / this.size);
 			this.#swapColumns(i, blockNumber * this.size + ranNum);
 		}
 	}
