@@ -21,42 +21,36 @@ class sudoku {
 		console.log(this.board);
 	}
 	#newBoardByShuffle() {
+		//Some sample boards for testing
+		const sampleBoards = {
+			orderedBoard: new Array(9)
+				.fill(0)
+				.map((val, index) =>
+					new Array(9)
+						.fill(0)
+						.map((val, subindex) => index * 9 + subindex)
+				),
+			rowedBoard: new Array(9)
+				.fill(0)
+				.map((val, index) => new Array(9).fill(0).map((val) => index)),
+			columnedBoard: new Array(9)
+				.fill(0)
+				.map((val, index) =>
+					new Array(9).fill(0).map((val, subindex) => subindex)
+				),
+		};
+
 		//Deep copy the unitBoard
-		console.log("Before deepCopy :");
-		console.log(this.unitBoard);
-		//Make an ordered board
-		const orderedBoard = new Array(9)
-			.fill(0)
-			.map((val, index) =>
-				new Array(9)
-					.fill(0)
-					.map((val, subindex) => index * 9 + subindex)
-			);
-		const rowedBoard = new Array(9)
-			.fill(0)
-			.map((val, index) => new Array(9).fill(0).map((val) => index));
-		const columnedBoard = new Array(9)
-			.fill(0)
-			.map((val, index) =>
-				new Array(9).fill(0).map((val, subindex) => subindex)
-			);
-		//console.log(orderedBoard);
-		console.log(columnedBoard);
-		this.board = columnedBoard.map((elem) => {
-			console.log("row: ");
-			console.log(elem);
-			return elem.map((cell) => {
-				//console.log("cell");
-				//console.log(cell);
-				return cell;
-			});
-		});
+		this.board = this.unitBoard.map((elem) => elem.map((cell) => cell));
+
 		console.log("After deepCopy :");
 		console.log(this.board);
+
 		//swap numbers
-		//this.#shuffleNumbers();
-		//shuffle rows and columns, then subgrid rows and columns
-		// this.#shuffleRows();
+		this.#shuffleNumbers();
+		
+        //shuffle rows and columns, then subgrid rows and columns
+		this.#shuffleRows();
 		this.#shuffleColumns();
 	}
 
